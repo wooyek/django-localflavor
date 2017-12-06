@@ -145,7 +145,7 @@ class PLNationalIDCardNumberField(EmptyValueCompatMixin, RegexField):
         return result % 10 == 0
 
 
-class PLNIPField(EmptyValueCompatMixin, RegexField):
+class PLNIPField(RegexField, EmptyValueCompatMixin):
     """
     A form field that validates as Polish Tax Number (NIP).
 
@@ -161,7 +161,7 @@ class PLNIPField(EmptyValueCompatMixin, RegexField):
 
     def __init__(self, max_length=None, min_length=None, *args, **kwargs):
         super(PLNIPField, self).__init__(r'^\d{3}-\d{3}-\d{2}-\d{2}$|^\d{3}-\d{2}-\d{2}-\d{3}$|^\d{10}$',
-                                         max_length, min_length,
+                                         max_length=max_length, min_length=min_length,
                                          *args, **kwargs)
 
     def clean(self, value):
@@ -184,7 +184,7 @@ class PLNIPField(EmptyValueCompatMixin, RegexField):
         return result == int(number[-1])
 
 
-class PLREGONField(EmptyValueCompatMixin, RegexField):
+class PLREGONField(RegexField, EmptyValueCompatMixin):
     """
     A form field that validates its input is a REGON number.
 
@@ -199,7 +199,7 @@ class PLREGONField(EmptyValueCompatMixin, RegexField):
 
     def __init__(self, max_length=None, min_length=None, *args, **kwargs):
         super(PLREGONField, self).__init__(r'^\d{9,14}$',
-                                           max_length, min_length, *args, **kwargs)
+                                           max_length=max_length, min_length=min_length, *args, **kwargs)
 
     def clean(self, value):
         super(PLREGONField, self).clean(value)
